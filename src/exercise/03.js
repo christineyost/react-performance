@@ -15,33 +15,37 @@ function Menu({
 }) {
   return (
     <ul {...getMenuProps()}>
-      {items.map((item, index) => (
-        <ListItem
-          key={item.id}
-          getItemProps={getItemProps}
-          item={item}
-          index={index}
-          selectedItem={selectedItem}
-          highlightedIndex={highlightedIndex}
-        >
-          {item.name}
-        </ListItem>
-      ))}
+      {items.map((item, index) => {
+        const isSelected = selectedItem?.id === item.id
+        const isHighlighted = highlightedIndex === index
+
+        return (
+          <ListItem
+            key={item.id}
+            getItemProps={getItemProps}
+            item={item}
+            index={index}
+            isSelected={isSelected}
+            isHighlighted={isHighlighted}
+          >
+            {item.name}
+          </ListItem>
+        )
+      })}
     </ul>
   )
 }
 // 🐨 Memoize the Menu here using React.memo
+Menu = React.memo(Menu)
 
 function ListItem({
   getItemProps,
   item,
   index,
-  selectedItem,
-  highlightedIndex,
+  isSelected,
+  isHighlighted,
   ...props
 }) {
-  const isSelected = selectedItem?.id === item.id
-  const isHighlighted = highlightedIndex === index
   return (
     <li
       {...getItemProps({
@@ -57,6 +61,22 @@ function ListItem({
   )
 }
 // 🐨 Memoize the ListItem here using React.memo
+// ListItem = React.memo(ListItem, (prevProps, newProps) => {
+//   if (prevProps.getItemProps !== newProps.getItemProps) return false
+//   if (prevProps.item !== newProps.item) return false
+//   if (prevProps.index !== newProps.index) return false
+//   if (prevProps.selectedItem !== newProps.selectedItem) return false
+
+//   if (prevProps.highlightedIndex !== newProps.highlightedIndex) {
+//     const wasPreviouslyHighlighted =
+//       prevProps.highlightedIndex === prevProps.index
+//     const isCurrentlyHighlighted = newProps.highlightedIndex === newProps.index
+//     return wasPreviouslyHighlighted === isCurrentlyHighlighted
+//   }
+
+//   return true
+// })
+ListItem = React.memo(ListItem)
 
 function App() {
   const forceRerender = useForceRerender()
