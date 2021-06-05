@@ -35,7 +35,7 @@ function Menu({
     </ul>
   )
 }
-// 🐨 Memoize the Menu here using React.memo
+
 Menu = React.memo(Menu)
 
 function ListItem({
@@ -60,7 +60,7 @@ function ListItem({
     />
   )
 }
-// 🐨 Memoize the ListItem here using React.memo
+
 // ListItem = React.memo(ListItem, (prevProps, newProps) => {
 //   if (prevProps.getItemProps !== newProps.getItemProps) return false
 //   if (prevProps.item !== newProps.item) return false
@@ -76,6 +76,7 @@ function ListItem({
 
 //   return true
 // })
+
 ListItem = React.memo(ListItem)
 
 function App() {
